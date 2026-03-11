@@ -6,31 +6,31 @@
     "hint": "game logo"
   },
   "guessFortnite": {
-    "src": "1.jpg",
+    "src": "/1.jpg",
     "width": 600,
     "height": 400,
     "hint": "Fortnite character"
   },
   "guessPubg": {
-    "src": "2.jpg",
+    "src": "/2.jpg",
     "width": 600,
     "height": 400,
     "hint": "battlefield plane"
   },
   "guessApex": {
-    "src": "3.jpg",
+    "src": "/3.jpg",
     "width": 600,
     "height": 400,
     "hint": "apex legends"
   },
   "guessGta": {
-    "src": "4.jpg",
+    "src": "/4.jpg",
     "width": 600,
     "height": 400,
     "hint": "gta driving"
   },
   "guessFifa": {
-    "src": "5.jpg",
+    "src": "/5.jpg",
     "width": 600,
     "height": 400,
     "hint": "football player"
