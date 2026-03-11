@@ -1,0 +1,38 @@
+{
+  "logo": {
+    "src": "https://picsum.photos/seed/game-logo/100/100",
+    "width": 100,
+    "height": 100,
+    "hint": "game logo"
+  },
+  "guessFortnite": {
+    "src": "1.jpg",
+    "width": 600,
+    "height": 400,
+    "hint": "Fortnite character"
+  },
+  "guessPubg": {
+    "src": "2.jpg",
+    "width": 600,
+    "height": 400,
+    "hint": "battlefield plane"
+  },
+  "guessApex": {
+    "src": "3.jpg",
+    "width": 600,
+    "height": 400,
+    "hint": "apex legends"
+  },
+  "guessGta": {
+    "src": "4.jpg",
+    "width": 600,
+    "height": 400,
+    "hint": "gta driving"
+  },
+  "guessFifa": {
+    "src": "5.jpg",
+    "width": 600,
+    "height": 400,
+    "hint": "football player"
+  }
+}

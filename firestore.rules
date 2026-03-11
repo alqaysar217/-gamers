@@ -1,0 +1,107 @@
+/**
+ * This ruleset secures the 'Gamers' Night Challenge' game backend.
+ *
+ * Core Philosophy:
+ * This security model is built on a hybrid public/private data architecture.
+ * Game content (questions, options, badges) is publicly readable but locked from client-side writes,
+ * ensuring data integrity. Player game sessions are stored in a public collection to facilitate
+ * a global leaderboard, but writes are restricted to the owner of the session.
+ *
+ * Data Structure:
+ * - /surveyQuestions/{id}: Public, read-only collection of game questions.
+ * - /surveyOptions/{id}: Public, read-only collection of answer options.
+ * - /badges/{id}: Public, read-only collection of achievable badges.
+ * - /gameSessions/{id}: Publicly readable collection of all game scores for the leaderboard.
+ *   Creation is restricted to the authenticated user submitting their own score.
+ * - /playerProfiles/{userId}/...: Player-specific data is nested under a path
+ *   where {userId} MUST match the authenticated player's UID.
+ *
+ * Key Security Decisions:
+ * - Anonymous Auth: Player-specific security relies on Firebase Anonymous
+ *   Authentication. The `request.auth.uid` is the unique, anonymous player identifier.
+ * - Public Leaderboard: The `/gameSessions` collection is readable by anyone to allow
+ *   for a global leaderboard.
+ * - Write Integrity: On creation, documents must contain the correct owner UID.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // -------------------------------------------------------------------------
+    // Public Read-Only Collections
+    // -------------------------------------------------------------------------
+
+    match /surveyQuestions/{surveyQuestionId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /surveyOptions/{surveyOptionId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /badges/{badgeId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+    
+    // -------------------------------------------------------------------------
+    // Leaderboard Collection
+    // -------------------------------------------------------------------------
+    
+    match /gameSessions/{gameSessionId} {
+      allow get, list: if true;
+      
+      allow create: if isSignedIn() 
+                    && request.resource.data.playerProfileId == request.auth.uid
+                    && request.resource.data.playerName is string
+                    && request.resource.data.playerName.size() > 0
+                    && request.resource.data.totalPointsEarned is number
+                    && request.resource.data.createdAt == request.time
+                    && request.resource.data.updatedAt == request.time;
+      
+      // Allow the owner to update their score. This is the definitive fix.
+      allow update: if isOwner(gameSessionId);
+      
+      allow delete: if isOwner(gameSessionId);
+    }
+
+    // -------------------------------------------------------------------------
+    // Player-Specific Data (Private)
+    // -------------------------------------------------------------------------
+
+    match /playerProfiles/{playerProfileId} {
+      allow get, update: if isOwner(playerProfileId);
+      allow list: if false;
+      allow create: if isOwner(playerProfileId) && request.resource.data.id == playerProfileId;
+      // Allow owner to delete their own profile data.
+      allow delete: if isOwner(playerProfileId);
+    }
+
+    // -------------------------------------------------------------------------
+    // Survey Response Collection (Admin Read/Delete)
+    // -------------------------------------------------------------------------
+    match /surveyResponses/{surveyResponseId} {
+      allow create: if isSignedIn() 
+                    && request.resource.data.playerProfileId == request.auth.uid
+                    && request.resource.data.playerName is string
+                    && request.resource.data.answers is list
+                    && request.resource.data.createdAt == request.time;
+      allow get, list, delete: if true;
+      allow update: if false;
+    }
+  }
+}

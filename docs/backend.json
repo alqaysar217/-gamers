@@ -1,0 +1,369 @@
+{
+  "entities": {
+    "SurveyQuestion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SurveyQuestion",
+      "type": "object",
+      "description": "Represents a single survey question in the 'Gamers' Night Challenge' game.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the SurveyQuestion entity."
+        },
+        "questionTextArabic": {
+          "type": "string",
+          "description": "The full text of the survey question in Arabic."
+        },
+        "order": {
+          "type": "number",
+          "description": "The sequential order in which the question appears in the game, from 1 to 8."
+        },
+        "visualSceneDescription": {
+          "type": "string",
+          "description": "A textual description or identifier of the 2D game environment/scene for this question stage (e.g., 'bedroom_stage1')."
+        },
+        "googleFormEntryId": {
+          "type": "string",
+          "description": "An identifier used to map this question to a specific entry field in the target Google Form/Sheet for data submission."
+        }
+      },
+      "required": [
+        "id",
+        "questionTextArabic",
+        "order",
+        "googleFormEntryId"
+      ]
+    },
+    "SurveyOption": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SurveyOption",
+      "type": "object",
+      "description": "Represents a single answer option for a survey question.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the SurveyOption entity."
+        },
+        "surveyQuestionId": {
+          "type": "string",
+          "description": "Reference to the SurveyQuestion this option belongs to. (Relationship: SurveyQuestion 1:N SurveyOption)"
+        },
+        "optionTextArabic": {
+          "type": "string",
+          "description": "The text of the answer option in Arabic."
+        },
+        "visualIconReference": {
+          "type": "string",
+          "description": "A URL or identifier for the visual icon/object that players interact with to select this option in the game."
+        },
+        "pointsAwarded": {
+          "type": "number",
+          "description": "The number of points awarded to the player for selecting this specific option."
+        },
+        "googleFormOptionValue": {
+          "type": "string",
+          "description": "The specific value string that should be sent to Google Forms/Sheets if this option is selected."
+        }
+      },
+      "required": [
+        "id",
+        "surveyQuestionId",
+        "optionTextArabic",
+        "visualIconReference",
+        "pointsAwarded",
+        "googleFormOptionValue"
+      ]
+    },
+    "PlayerProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PlayerProfile",
+      "type": "object",
+      "description": "Stores information about a player, identified by their anonymous user ID.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique, anonymized identifier for the PlayerProfile entity. This ID corresponds to the Firebase Anonymous Auth UID."
+        },
+        "playerName": {
+          "type": "string",
+          "description": "The player's chosen display name for the session."
+        },
+        "firstSessionDate": {
+          "type": "string",
+          "description": "Timestamp of the player's first recorded game session.",
+          "format": "date-time"
+        },
+        "lastSessionDate": {
+          "type": "string",
+          "description": "Timestamp of the player's most recent game session.",
+          "format": "date-time"
+        },
+        "totalGamesPlayed": {
+          "type": "number",
+          "description": "The total number of game sessions completed or started by this player."
+        },
+        "highestSessionScore": {
+          "type": "number",
+          "description": "The highest score achieved by this player in a single completed game session."
+        },
+        "initialSurveyScore": {
+          "type": "number",
+          "description": "The score obtained from the initial 8-question survey."
+        },
+        "completedChallenges": {
+          "type": "array",
+          "description": "A list of titles of the challenges the player has completed.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "playerName",
+        "firstSessionDate",
+        "lastSessionDate",
+        "totalGamesPlayed",
+        "highestSessionScore"
+      ]
+    },
+    "GameSession": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "GameSession",
+      "type": "object",
+      "description": "Records a single complete play-through of the 'Gamers' Night Challenge' game by a player.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the GameSession entity."
+        },
+        "playerProfileId": {
+          "type": "string",
+          "description": "Reference to the PlayerProfile associated with this session. Corresponds to the Firebase Auth UID."
+        },
+        "playerName": {
+          "type": "string",
+          "description": "The player's chosen display name for this session."
+        },
+        "totalPointsEarned": {
+          "type": "number",
+          "description": "The total points accumulated by the player during this session."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the game session was completed and recorded.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the game session score was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "playerProfileId",
+        "playerName",
+        "totalPointsEarned",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Badge": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Badge",
+      "type": "object",
+      "description": "Defines a collectible badge that players can earn within the game.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Badge entity."
+        },
+        "nameArabic": {
+          "type": "string",
+          "description": "The name of the badge in Arabic (e.g., 'بومة الليل' - Night Owl)."
+        },
+        "descriptionArabic": {
+          "type": "string",
+          "description": "A description of the badge and its significance, in Arabic."
+        },
+        "iconReference": {
+          "type": "string",
+          "description": "A URL or identifier for the visual icon representing the badge."
+        },
+        "earningCriteriaDescription": {
+          "type": "string",
+          "description": "A human-readable description of the conditions required to earn this badge (e.g., 'Complete the game scoring over 500 points.')."
+        }
+      },
+      "required": [
+        "id",
+        "nameArabic",
+        "descriptionArabic",
+        "iconReference",
+        "earningCriteriaDescription"
+      ]
+    },
+    "SurveyResponse": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SurveyResponse",
+      "type": "object",
+      "description": "Stores a player's complete set of answers to the initial 8-question survey.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the SurveyResponse entity."
+        },
+        "playerProfileId": {
+          "type": "string",
+          "description": "The UID of the player who submitted the survey. (Corresponds to PlayerProfile ID)."
+        },
+        "playerName": {
+          "type": "string",
+          "description": "The player's name at the time of submission."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the survey was submitted."
+        },
+        "answers": {
+          "type": "array",
+          "description": "The list of answers provided by the player.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "question",
+              "answer",
+              "points"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "playerProfileId",
+        "playerName",
+        "createdAt",
+        "answers"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/surveyQuestions/{surveyQuestionId}",
+        "definition": {
+          "entityName": "SurveyQuestion",
+          "schema": {
+            "$ref": "#/backend/entities/SurveyQuestion"
+          },
+          "description": "Stores the definitions for all survey questions. This is a globally readable collection, accessible to all players.",
+          "params": [
+            {
+              "name": "surveyQuestionId",
+              "description": "The unique identifier for a specific survey question."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/surveyOptions/{surveyOptionId}",
+        "definition": {
+          "entityName": "SurveyOption",
+          "schema": {
+            "$ref": "#/backend/entities/SurveyOption"
+          },
+          "description": "Stores the definitions for all answer options for survey questions. This is a globally readable collection, accessible to all players.",
+          "params": [
+            {
+              "name": "surveyOptionId",
+              "description": "The unique identifier for a specific survey option."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/badges/{badgeId}",
+        "definition": {
+          "entityName": "Badge",
+          "schema": {
+            "$ref": "#/backend/entities/Badge"
+          },
+          "description": "Stores the definitions for all collectible badges in the game. This is a globally readable collection.",
+          "params": [
+            {
+              "name": "badgeId",
+              "description": "The unique identifier for a specific badge."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/gameSessions/{gameSessionId}",
+        "definition": {
+          "entityName": "GameSession",
+          "schema": {
+            "$ref": "#/backend/entities/GameSession"
+          },
+          "description": "Stores all completed game sessions for the public leaderboard. Readable by everyone, writable only by the session owner.",
+          "params": [
+            {
+              "name": "gameSessionId",
+              "description": "The unique identifier for a specific game session."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/playerProfiles/{playerProfileId}",
+        "definition": {
+          "entityName": "PlayerProfile",
+          "schema": {
+            "$ref": "#/backend/entities/PlayerProfile"
+          },
+          "description": "Stores anonymized and aggregated information for a player across game sessions. The 'playerProfileId' corresponds to the Firebase Anonymous User ID (request.auth.uid). Only the owner can read or write their own profile.",
+          "params": [
+            {
+              "name": "playerProfileId",
+              "description": "The unique, anonymized identifier for the player profile, corresponding to Firebase's request.auth.uid."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/surveyResponses/{surveyResponseId}",
+        "definition": {
+          "entityName": "SurveyResponse",
+          "schema": {
+            "$ref": "#/backend/entities/SurveyResponse"
+          },
+          "description": "Stores individual survey submissions. Writable only by the survey owner, not publicly readable.",
+          "params": [
+            {
+              "name": "surveyResponseId",
+              "description": "The unique identifier for a specific survey response document."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure has been updated to support a public leaderboard. The primary change is the introduction of a top-level `/gameSessions` collection. This collection is publicly readable, allowing any client to query it to build the leaderboard display. Writes to this collection are restricted: a user can only create a game session document where the `playerProfileId` matches their own authentication UID, ensuring that players can only post their own scores. This flat structure is efficient for querying and sorting all player scores. The previously nested `gameSessions` collection has been removed. Other player-specific data remains under `/playerProfiles/{playerProfileId}` for individual user data that is not part of the public leaderboard."
+  }
+}

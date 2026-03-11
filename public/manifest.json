@@ -1,0 +1,60 @@
+{
+  "name": "تحدي القيمرز قبل النوم (Gamers' Night Challenge)",
+  "short_name": "قيمرز",
+  "description": "لعبة قصيرة وممتعة لجمع بيانات حول عادات اللاعبين قبل النوم",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/game-logo-1/72/72",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-2/96/96",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-3/128/128",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-4/144/144",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-5/152/152",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-6/192/192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-7/384/384",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://picsum.photos/seed/game-logo-8/512/512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#6e27c0",
+  "background_color": "#2d3748"
+}
