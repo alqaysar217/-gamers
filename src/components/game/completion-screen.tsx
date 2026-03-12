@@ -9,11 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHead } from '@/components/ui/table';
-import { RotateCw, Camera, Star, Crown, Home } from 'lucide-react';
+import { RotateCw, Camera, Star, Crown, MoreHorizontal, Home } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import html2canvas from "html2canvas";
 import { useToast } from "@/hooks/use-toast";
-import placeholderImages from '@/lib/placeholder-images.json';
 
 type CompletionScreenProps = {
   onRestart: () => void;
@@ -138,12 +137,11 @@ export default function CompletionScreen({ onRestart, onGoToHub }: CompletionScr
         <Card className="rounded-xl border-none bg-background/80 backdrop-blur-2xl">
            <CardContent className="flex flex-col gap-4 text-center items-center p-8">
              <Image 
-                src={placeholderImages.playerAvatar.src}
+                src="/logo-app.jpg"
                 alt="Player Avatar"
-                width={placeholderImages.playerAvatar.width}
-                height={placeholderImages.playerAvatar.height}
+                width={120}
+                height={120}
                 className="rounded-full border-4 border-primary/50 shadow-lg -mt-24"
-                data-ai-hint={placeholderImages.playerAvatar.hint}
                 priority
              />
              <h2 className="font-headline text-3xl sm:text-4xl font-bold mt-2">{playerName}</h2>
