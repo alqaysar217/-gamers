@@ -5,6 +5,12 @@
     "height": 100,
     "hint": "game logo"
   },
+    "playerAvatar": {
+    "src": "/logo-app.jpg",
+    "width": 120,
+    "height": 120,
+    "hint": "player avatar"
+  },
   "guessFortnite": {
     "src": "/1.jpg",
     "width": 600,
